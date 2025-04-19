@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="page_title">Digital Bloom - Empowering Rural Girls</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styles & Variables --- */
+        :root {
+            --primary-color: #225cd9; /* Changed Green to Blue */
+            --secondary-color: #FFC107; /* Yellow - Optimism, Energy */
+            --accent-color: #03A9F4; /* Light Blue - Technology, Calm */
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --text-color: #555;
+            /* Include Noto Sans Devanagari for Hindi/Marathi */
+            --font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+        }
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        h1, h2, h3 {
+            color: var(--dark-color);
+            margin-bottom: 0.8em;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2rem; text-align: center; margin-bottom: 1.5em;}
+        h3 { font-size: 1.4rem; }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header --- */
+        .header {
+            background: #fff;
+            color: var(--dark-color);
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            position: sticky; /* Make header sticky */
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+        }
+
+        .header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .header .nav {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between nav items and switcher */
+        }
+
+        .header .nav ul {
+            display: flex;
+            flex-wrap: wrap; /* Allow nav items to wrap */
+        }
+
+        .header .nav li {
+            margin-left: 20px;
+        }
+
+        .header .nav a {
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            white-space: nowrap; /* Prevent nav links breaking */
+        }
+
+        .header .nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Language Switcher Style */
+        .language-switcher select {
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            font-family: inherit; /* Use body font */
+            margin-left: 15px; /* Space from nav links */
+        }
+
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(rgba(244, 244, 244, 0.8), rgba(244, 244, 244, 0.8)), url('placeholder-image.jpg') no-repeat center center/cover;
+            background-color: var(--light-color); /* Fallback color */
+            color: var(--dark-color);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero-content h1 {
+            color: var(--dark-color);
+             /* Adjust line-height for potentially taller Devanagari text */
+            line-height: 1.4;
+        }
+         /* Separate key for the static part of H1 */
+        .hero-headline-static {
+             display: block; /* Ensure <br> works */
+             margin-bottom: 0.2em;
+        }
+
+        .hero-content .dynamic-text {
+            color: var(--primary-color);
+            font-weight: 700;
+            display: inline-block;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+            min-height: 1.3em; /* Adjust min-height */
+            min-width: 120px; /* Adjust min-width */
+            vertical-align: bottom; /* Align better with surrounding text */
+        }
+
+        .dynamic-text.fade-out {
+            opacity: 0;
+        }
+
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 1rem auto 2rem auto;
+        }
+
+        .hero-buttons .btn {
+            margin: 5px 10px; /* Adjust margin for wrapping */
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+             background-color: #1a4ccd; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-large {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+        }
+
+
+        /* --- Features Section --- */
+        .features-section {
+            padding: 4rem 0;
+            background-color: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--light-color);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+             opacity: 0; /* Keep for animation */
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: #fff;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-section .btn-primary {
+            background-color: #fff;
+            color: var(--primary-color);
+        }
+
+        .cta-section .btn-primary:hover {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--dark-color);
+            color: #ccc;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .hero-content p { font-size: 1rem; }
+
+            .header .container {
+                flex-direction: column;
+                align-items: flex-start; /* Align items left */
+            }
+            .header .nav {
+                margin-top: 10px;
+                width: 100%; /* Make nav take full width */
+                justify-content: space-between; /* Space out links and switcher */
+            }
+             .header .nav ul {
+                 padding-left: 0; /* Remove padding */
+             }
+             .header .nav li {
+                margin-left: 15px; /* Reduce spacing */
+            }
+            .language-switcher select {
+                margin-left: 0; /* Remove margin when stacked */
+            }
+
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons .btn {
+                margin-bottom: 10px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+             h1 { font-size: 1.8rem; }
+             .header .nav {
+                 flex-direction: column;
+                 align-items: flex-start;
+             }
+             .header .nav ul {
+                margin-bottom: 10px;
+                 display: block; /* Stack links vertically */
+             }
+             .header .nav li {
+                 margin-left: 0;
+                 margin-bottom: 5px;
+             }
+             .language-switcher {
+                 margin-top: 10px;
+                 align-self: flex-start; /* Align switcher left */
+             }
+             .btn {
+                 padding: 10px 20px;
+                 font-size: 0.9rem;
+             }
+              .btn-large {
+                padding: 12px 28px;
+                font-size: 1rem;
+            }
+        }
+
+        /* --- Animation Keyframes --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo" data-translate-key="logo_text">Digital Bloom</div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#hero" data-translate-key="nav_home">Home</a></li>
+                    <li><a href="#features" data-translate-key="nav_features">Features</a></li>
+                    <!-- MODIFIED HREF -->
+                    <li><a href="sign-up.html" data-translate-key="nav_join">Join Us</a></li>
+                </ul>
+                <div class="language-switcher">
+                    <select id="language-select">
+                        <option value="en">English</option>
+                        <option value="mr">मराठी</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-content">
+                <h1>
+                    <span class="hero-headline-static" data-translate-key="hero_title_static">Empowering Rural Girls to</span>
+                    <span class="dynamic-text">Learn</span> <!-- JS will handle this word -->
+                    <span data-translate-key="hero_title_suffix"> Digitally</span>
+                </h1>
+                <p data-translate-key="hero_subtitle">Unlocking potential through digital literacy, skills, and connection. Join our community and grow with us!</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary" data-translate-key="hero_btn_explore">Explore Features</a>
+                    <!-- MODIFIED HREF -->
+                    <a href="sign-up.html" class="btn btn-secondary" data-translate-key="hero_btn_start">Get Started</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 data-translate-key="features_title">What We Offer</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-laptop-code fa-3x feature-icon"></i>
+                        <h3 data-translate-key="feature1_title">Digital Skills Training</h3>
+                        <p data-translate-key="feature1_desc">Learn essential computer basics, internet safety, coding fundamentals, and more.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chalkboard-teacher fa-3x feature-icon"></i>
+                        <h3 data-translate-key="feature2_title">Online Courses</h3>
+                        <p data-translate-key="feature2_desc">Access engaging courses designed specifically for learning valuable digital skills.</p>
+                    </div>
+                    <div class="feature-card">
+                         <i class="fas fa-users fa-3x feature-icon"></i>
+                        <h3 data-translate-key="feature3_title">Community & Mentorship</h3>
+                        <p data-translate-key="feature3_desc">Connect with peers and mentors, share experiences, and support each other's growth.</p>
+                    </div>
+                     <div class="feature-card">
+                        <i class="fas fa-lightbulb fa-3x feature-icon"></i>
+                        <h3 data-translate-key="feature4_title">Opportunities Portal</h3>
+                        <p data-translate-key="feature4_desc">Discover resources, scholarships, and opportunities relevant to your digital journey.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section id="cta-section" class="cta-section">
+            <div class="container">
+                <h2 data-translate-key="cta_title">Ready to Start Your Digital Journey?</h2>
+                <p data-translate-key="cta_subtitle">Join Digital Bloom today and unlock a world of possibilities.</p>
+                 <!-- MODIFIED HREF -->
+                 <a href="sign-up.html" class="btn btn-primary btn-large" data-translate-key="cta_button">Sign Up Now</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p data-translate-key="footer_text">© 2024 Digital Bloom. Inspiring digital futures for rural girls.</p>
+            <!-- Add social media links if desired -->
+        </div>
+    </footer>
+
+    <script>
+        // JAVASCRIPT REMAINS THE SAME - No changes needed here for redirection
+        const translations = {
+            "en": {
+                "page_title": "Digital Bloom - Empowering Rural Girls",
+                "logo_text": "Digital Bloom",
+                "nav_home": "Home",
+                "nav_features": "Features",
+                "nav_join": "Join Us", // Text remains, link changes
+                "hero_title_static": "Empowering Rural Girls to",
+                "hero_title_suffix": " Digitally",
+                "hero_subtitle": "Unlocking potential through digital literacy, skills, and connection. Join our community and grow with us!",
+                "hero_btn_explore": "Explore Features",
+                "hero_btn_start": "Get Started", // Text remains, link changes
+                "features_title": "What We Offer",
+                "feature1_title": "Digital Skills Training",
+                "feature1_desc": "Learn essential computer basics, internet safety, coding fundamentals, and more.",
+                "feature2_title": "Online Courses",
+                "feature2_desc": "Access engaging courses designed specifically for learning valuable digital skills.",
+                "feature3_title": "Community & Mentorship",
+                "feature3_desc": "Connect with peers and mentors, share experiences, and support each other's growth.",
+                "feature4_title": "Opportunities Portal",
+                "feature4_desc": "Discover resources, scholarships, and opportunities relevant to your digital journey.",
+                "cta_title": "Ready to Start Your Digital Journey?",
+                "cta_subtitle": "Join Digital Bloom today and unlock a world of possibilities.",
+                "cta_button": "Sign Up Now", // Text remains, link changes
+                "footer_text": "© 2024 Digital Bloom. Inspiring digital futures for rural girls.",
+                "dynamic_words": ["Learn", "Create", "Connect", "Grow", "Innovate", "Lead"]
+            },
+            "mr": {
+                "page_title": "डिजिटल ब्लूम - ग्रामीण मुलींचे सक्षमीकरण",
+                "logo_text": "डिजिटल ब्लूम",
+                "nav_home": "मुख्यपृष्ठ",
+                "nav_features": "वैशिष्ट्ये",
+                "nav_join": "सामील व्हा", // Text remains, link changes
+                "hero_title_static": "ग्रामीण मुलींना सक्षम करणे",
+                "hero_title_suffix": " डिजिटली",
+                "hero_subtitle": "डिजिटल साक्षरता, कौशल्ये आणि जोडणीद्वारे क्षमता अनलॉक करा. आमच्या समुदायात सामील व्हा आणि आमच्यासोबत वाढा!",
+                "hero_btn_explore": "वैशिष्ट्ये एक्सप्लोर करा",
+                "hero_btn_start": "सुरुवात करा", // Text remains, link changes
+                "features_title": "आम्ही काय ऑफर करतो",
+                "feature1_title": "डिजिटल कौशल्ये प्रशिक्षण",
+                "feature1_desc": "आवश्यक संगणक मूलभूत ज्ञान, इंटरनेट सुरक्षा, कोडिंग मूलभूत तत्त्वे आणि बरेच काही शिका.",
+                "feature2_title": "ऑनलाइन अभ्यासक्रम",
+                "feature2_desc": "मूल्यवान डिजिटल कौशल्ये शिकण्यासाठी खास डिझाइन केलेल्या आकर्षक अभ्यासक्रमांमध्ये प्रवेश करा.",
+                "feature3_title": "समुदाय आणि मार्गदर्शन",
+                "feature3_desc": "समवयस्क आणि मार्गदर्शकांशी कनेक्ट व्हा, अनुभव शेअर करा आणि एकमेकांच्या वाढीस समर्थन द्या.",
+                "feature4_title": "संधी पोर्टल",
+                "feature4_desc": "आपल्या डिजिटल प्रवासाशी संबंधित संसाधने, शिष्यवृत्ती आणि संधी शोधा.",
+                "cta_title": "तुमचा डिजिटल प्रवास सुरू करण्यास तयार आहात?",
+                "cta_subtitle": "आजच डिजिटल ब्लूममध्ये सामील व्हा आणि शक्यतांचे जग अनलॉक करा.",
+                "cta_button": "आत्ताच नोंदणी करा", // Text remains, link changes
+                "footer_text": "© 2024 डिजिटल ब्लूम. ग्रामीण मुलींसाठी प्रेरणादायी डिजिटल भविष्य.",
+                "dynamic_words": ["शिका", "तयार करा", "कनेक्ट करा", "वाढा", "नवीन करा", "नेतृत्व करा"]
+            },
+             "hi": {
+                "page_title": "डिजिटल ब्लूम - ग्रामीण लड़कियों का सशक्तिकरण",
+                "logo_text": "डिजिटल ब्लूम",
+                "nav_home": "होम",
+                "nav_features": "विशेषताएँ",
+                "nav_join": "हमसे जुड़ें", // Text remains, link changes
+                "hero_title_static": "ग्रामीण लड़कियों को सशक्त बनाना",
+                "hero_title_suffix": " डिजिटल रूप से",
+                "hero_subtitle": "डिजिटल साक्षरता, कौशल और कनेक्शन के माध्यम से क्षमता को अनलॉक करना। हमारे समुदाय में शामिल हों और हमारे साथ बढ़ें!",
+                "hero_btn_explore": "विशेषताएँ देखें",
+                "hero_btn_start": "शुरू करें", // Text remains, link changes
+                "features_title": "हम क्या प्रदान करते हैं",
+                "feature1_title": "डिजिटल कौशल प्रशिक्षण",
+                "feature1_desc": "आवश्यक कंप्यूटर मूल बातें, इंटरनेट सुरक्षा, कोडिंग की मूल बातें और बहुत कुछ सीखें।",
+                "feature2_title": "ऑनलाइन पाठ्यक्रम",
+                "feature2_desc": "मूल्यवान डिजिटल कौशल सीखने के लिए विशेष रूप से डिज़ाइन किए गए आकर्षक पाठ्यक्रमों तक पहुँचें।",
+                "feature3_title": "समुदाय और मेंटरशिप",
+                "feature3_desc": "साथियों और आकाओं से जुड़ें, अनुभव साझा करें और एक-दूसरे के विकास का समर्थन करें।",
+                "feature4_title": "अवसर पोर्टल",
+                "feature4_desc": "अपनी डिजिटल यात्रा से संबंधित संसाधन, छात्रवृत्ति और अवसर खोजें।",
+                "cta_title": "अपनी डिजिटल यात्रा शुरू करने के लिए तैयार हैं?",
+                "cta_subtitle": "आज ही डिजिटल ब्लूम से जुड़ें और संभावनाओं की दुनिया अनलॉक करें।",
+                "cta_button": "अभी साइन अप करें", // Text remains, link changes
+                "footer_text": "© 2024 डिजिटल ब्लूम। ग्रामीण लड़कियों के लिए प्रेरक डिजिटल भविष्य।",
+                "dynamic_words": ["सीखें", "बनाएं", "जुड़ें", "बढ़ें", "नवाचार करें", "नेतृत्व करें"]
+            }
+        };
+
+        // --- Global variables for dynamic text effect ---
+        const dynamicTextElement = document.querySelector('.dynamic-text');
+        let words = translations['en'].dynamic_words; // Start with English words
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeEffectTimeout; // To clear timeout on language change
+
+        // --- Function to set language ---
+        function setLanguage(langCode) {
+            if (!translations[langCode]) {
+                console.error("Language code not found:", langCode);
+                return;
+            }
+
+            const translationData = translations[langCode];
+            document.documentElement.lang = langCode; // Update html lang attribute
+
+            document.querySelectorAll('[data-translate-key]').forEach(element => {
+                const key = element.getAttribute('data-translate-key');
+                if (translationData[key]) {
+                    // Use innerHTML to allow tags like <br> in translations
+                    element.innerHTML = translationData[key];
+                } else {
+                    console.warn(`Translation key "${key}" not found for language "${langCode}"`);
+                }
+            });
+
+            // --- Update and Reset Dynamic Text Effect ---
+            words = translationData.dynamic_words || translations['en'].dynamic_words; // Fallback to English words
+            wordIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+            clearTimeout(typeEffectTimeout); // Clear existing effect timeout
+             if (dynamicTextElement) {
+                dynamicTextElement.textContent = ''; // Clear current word immediately
+                dynamicTextElement.style.opacity = '1'; // Ensure visible
+                typeEffectTimeout = setTimeout(typeEffect, 500); // Restart effect after a short delay
+            }
+
+            // --- Save preference ---
+             try {
+                localStorage.setItem('preferredLanguage', langCode);
+             } catch (e) {
+                console.warn("Could not save language preference to localStorage.");
+             }
+        }
+
+        // --- Dynamic Text Typing Effect Function ---
+        function typeEffect() {
+            // Guard clause in case the element doesn't exist or no words defined
+            if (!dynamicTextElement || !words || words.length === 0) return;
+
+            clearTimeout(typeEffectTimeout); // Clear previous timeout
+
+            const currentWord = words[wordIndex];
+            let textToDisplay = '';
+            let delay = 150; // Typing speed
+
+            if (isDeleting) {
+                textToDisplay = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                delay = 80; // Deleting speed
+            } else {
+                textToDisplay = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+             // Prevent error if textToDisplay becomes null/undefined briefly
+            dynamicTextElement.textContent = textToDisplay || '';
+            dynamicTextElement.style.opacity = '1';
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                delay = 1500; // Pause duration
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Loop back
+                delay = 500; // Pause before typing next word
+            }
+
+            typeEffectTimeout = setTimeout(typeEffect, delay);
+        }
+
+
+        // --- DOMContentLoaded Event Listener ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSelect = document.getElementById('language-select');
+
+            // --- Smooth Scrolling (Will only apply to links starting with #, like #hero, #features) ---
+            const navLinks = document.querySelectorAll('.nav a[href^="#"]'); // Selector remains the same
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    try {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        } else { console.warn("Smooth scroll target not found:", targetId); }
+                    } catch (error) { console.error("Error during smooth scroll:", error); }
+                });
+            });
+
+            // --- Language Switcher Logic ---
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const defaultLang = 'en'; // Set your default language
+            const initialLang = savedLang && translations[savedLang] ? savedLang : defaultLang;
+
+            if (languageSelect) {
+                 languageSelect.value = initialLang; // Set dropdown to initial/saved language
+                languageSelect.addEventListener('change', (event) => {
+                    setLanguage(event.target.value);
+                });
+                 // Apply initial language translation
+                 setLanguage(initialLang);
+            } else {
+                console.error("Language select dropdown not found");
+                setLanguage(defaultLang); // Set default language if dropdown fails
+            }
+
+
+             // --- Intersection Observer for Feature Cards ---
+             if ('IntersectionObserver' in window) {
+                const featureCards = document.querySelectorAll('.feature-card');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animation = `fadeInUp 0.8s ease forwards`;
+                             observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                featureCards.forEach(card => {
+                    observer.observe(card);
+                });
+            } else {
+                console.warn("IntersectionObserver not supported. Scroll animations disabled.");
+                document.querySelectorAll('.feature-card').forEach(card => {
+                    card.style.opacity = '1'; // Make visible if no observer
+                });
+            }
+
+            // Initial start for type effect handled within setLanguage now
+        });
+    </script>
+
+</body>
+</html>
