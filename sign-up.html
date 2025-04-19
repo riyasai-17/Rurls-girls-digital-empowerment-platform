@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | Empower Platform</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nicer font */
+      margin: 0;
+      padding: 0;
+      /* Use a more relevant background or a gradient */
+      background: linear-gradient(135deg, #225cd9 100%);
+      /* Fallback background image if needed */
+       background: url('c2.jpg') no-repeat center center fixed; 
+       background-size: cover; 
+      display: flex; /* Use flexbox on body for centering */
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Removed .container as body handles centering now */
+
+    .auth-box {
+      background: white;
+      padding: 35px 40px; /* More padding */
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Enhanced shadow */
+      width: 380px; /* Slightly wider */
+      max-width: 90vw;
+      text-align: center; /* Center align content */
+    }
+
+    .auth-box h2 {
+      margin-top: 0;
+      margin-bottom: 25px; /* More space below heading */
+      color: #333;
+      font-size: 1.8em; /* Larger heading */
+    }
+
+    .input-group {
+       margin-bottom: 18px; /* Space between fields */
+       text-align: left; /* Align labels/inputs left */
+    }
+
+    .input-group label {
+       display: block;
+       margin-bottom: 5px;
+       font-weight: 600;
+       color: #555;
+       font-size: 0.9em;
+    }
+
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      display: block;
+      width: 100%;
+      padding: 12px 15px; /* More padding in inputs */
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box; /* Include padding in width */
+      font-size: 1em;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        border-color: #225cd9; /* Highlight focus */
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    }
+
+
+    button {
+      display: inline-block; /* Allows centering */
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 6px;
+      border: none; /* Remove default border */
+      background: #225cd9; /* Theme color */
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+      margin-top: 15px; /* Space above button */
+    }
+
+    button:hover {
+      background:#225cd9; /* Darker hover */
+    }
+
+    button:active {
+        transform: scale(0.98); /* Click feedback */
+    }
+
+    /* Style for disabled button */
+    button:disabled {
+        background-color: #225cd9; /* Lighter, inactive color */
+        cursor: not-allowed;
+    }
+
+    #msg {
+      color: #dc3545; /* Red color for errors */
+      margin-top: 15px;
+      font-size: 0.9em;
+      min-height: 1.2em; /* Prevent layout shift */
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+  border: 1px solid gray;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Container removed, body handles centering -->
+  <div class="auth-box">
+    <h2> Create Your Account</h2> <!-- Updated Title -->
+
+    <div class="input-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="e.g., Priya Sharma" required />
+    </div>
+
+    <div class="input-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+    </div>
+
+    <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Minimum 6 characters" required />
+    </div>
+
+    <div class="input-group">
+        <label for="role">Select Your Role</label>
+        <select id="role" required>
+          <option value="" disabled selected>-- Choose Role --</option> <!-- Improved default option -->
+          <option value="learner">Learner</option>
+          <option value="mentor">Mentor</option>
+        </select>
+      </div>
+
+    <!-- Signup Button - Always visible -->
+    <button id="signup-btn" onclick="handleSignup()">Sign Up</button>
+
+    <!-- Message Area -->
+    <p id="msg"></p>
+  </div>
+
+
+  <!-- Firebase Scripts (Ensure these versions are compatible if you change them) -->
+  <!-- Using specific versions for stability -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+  <script type="module">
+    // Import specific functions needed for signup
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    // --- Firebase Configuration ---
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCitHSZmMd4k5hdm-JU2CxxPf8NkNc3TFc",
+  authDomain: "dark-quasar-456916-g1.firebaseapp.com",
+  databaseURL: "https://dark-quasar-456916-g1-default-rtdb.firebaseio.com",
+  projectId: "dark-quasar-456916-g1",
+  storageBucket: "dark-quasar-456916-g1.firebasestorage.app",
+  messagingSenderId: "773027060771",
+  appId: "1:773027060771:web:711a4bd7de034859e96596",
+  measurementId: "G-Y0W1GPRD5S"
+};
+    // --- Initialize Firebase ---
+    let app, auth, db;
+    try {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getDatabase(app);
+        console.log("Firebase Initialized Successfully");
+    } catch (error) {
+        console.error("Firebase Initialization Failed:", error);
+        // Display a user-friendly message on the page
+        const msgElement = document.getElementById("msg");
+        if(msgElement) {
+            msgElement.innerText = "Error connecting to services. Please try again later.";
+        }
+        // Optionally disable the form
+        document.getElementById("signup-btn").disabled = true;
+    }
+
+
+    // --- Get DOM Elements ---
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const roleSelect = document.getElementById("role");
+    const signupButton = document.getElementById("signup-btn");
+    const msgElement = document.getElementById("msg");
+
+    // --- Function to handle Signup ---
+    window.handleSignup = async function () { // Make it async for await
+      // 1. Get values
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value; // No trim for password
+      const role = roleSelect.value;
+
+      // 2. Basic Client-Side Validation
+      if (!name || !email || !password || !role) {
+        msgElement.innerText = "Please fill in all fields.";
+        return;
+      }
+       if (password.length < 6) {
+           msgElement.innerText = "Password must be at least 6 characters long.";
+           return;
+       }
+       // Basic email format check (optional, Firebase does better validation)
+       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+       if (!emailPattern.test(email)) {
+           msgElement.innerText = "Please enter a valid email address.";
+           return;
+       }
+
+
+      // 3. Disable button & show loading state
+      signupButton.disabled = true;
+      signupButton.innerText = "Signing Up...";
+      msgElement.innerText = ""; // Clear previous messages
+
+      try {
+        // 4. Create user with Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        const uid = user.uid;
+        console.log("User created successfully:", uid);
+
+        // 5. Save user details to Realtime Database
+        await set(ref(db, 'users/' + uid), {
+          email: email,
+          name: name,
+          role: role,
+          createdAt: new Date().toISOString() // Optional: Store creation time
+        });
+        console.log("User data saved to database.");
+
+        // 6. Redirect based on role
+        msgElement.innerText = "Signup successful! Redirecting...";
+        msgElement.style.color = "#28a745"; // Green for success
+
+        // Add a small delay before redirecting for the user to see the message
+        setTimeout(() => {
+            if (role === 'learner') {
+                window.location.href = "user1.html"; // Replace with your actual learner page
+            } else if (role === 'mentor') {
+                window.location.href = "userrole2.html"; // Replace with your actual mentor page
+            
+            } else {
+                 // Should not happen if validation is correct, but handle just in case
+                 console.error("Unknown role selected:", role);
+                 msgElement.innerText = "Signup successful, but role redirection failed.";
+                 msgElement.style.color = "#ffc107"; // Yellow for warning
+                 signupButton.disabled = false; // Re-enable button if redirect fails
+                 signupButton.innerText = "Sign Up";
+            }
+        }, 1500); // Wait 1.5 seconds
+
+      } catch (error) {
+        // 7. Handle Errors
+        console.error("Signup Error:", error);
+        // Provide user-friendly error messages
+        let friendlyMessage = "An error occurred during sign up. Please try again.";
+        if (error.code === 'auth/email-already-in-use') {
+            friendlyMessage = "This email address is already registered.";
+        } else if (error.code === 'auth/weak-password') {
+            friendlyMessage = "The password is too weak. Please use a stronger password.";
+        } else if (error.code === 'auth/invalid-email') {
+            friendlyMessage = "The email address is not valid.";
+        }
+        // Check for network errors etc.
+        else if (error.message.includes("network error")) {
+             friendlyMessage = "Network error. Please check your connection and try again.";
+        }
+
+        msgElement.innerText = friendlyMessage;
+        msgElement.style.color = "#dc3545"; // Red for error
+
+        // 8. Re-enable button on error
+        signupButton.disabled = false;
+        signupButton.innerText = "Sign Up";
+      }
+    };
+
+    // --- Optional: Clear error message on input ---
+     [nameInput, emailInput, passwordInput, roleSelect].forEach(input => {
+        input.addEventListener('input', () => {
+            if (msgElement.innerText !== "" && msgElement.style.color !== "#28a745") { // Clear only if it's an error/warning message
+                 msgElement.innerText = "";
+            }
+        });
+     });
+
+  </script>
+</body>
+</html>
