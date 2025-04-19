@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Default language, updated by JS -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="pageTitle">Digital Learning Courses - Empowerment Platform</title>
+
+    <!-- Include Font Awesome (External Dependency) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Internal CSS -->
+    <style>
+        /* --- Basic Reset & Body --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa; /* Slightly different light background */
+            color: #343a40;
+            padding: 20px;
+        }
+
+        /* --- Main Container --- */
+        .courses-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- Header & Language Switcher --- */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #dee2e6;
+            position: relative;
+        }
+
+        header h2 {
+            color: #0056b3; /* Primary Blue */
+            margin-bottom: 15px;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+
+        header p {
+            color: #6c757d;
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 0px; /* Adjusted position */
+            right: 0px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .lang-btn {
+            padding: 6px 12px;
+            font-size: 0.9em;
+            border: 1px solid #ced4da;
+            background-color: #e9ecef;
+            color: #495057;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .lang-btn:hover {
+            background-color: #dee2e6;
+            border-color: #adb5bd;
+        }
+        .lang-btn.active {
+            background-color: #0056b3;
+            color: #fff;
+            border-color: #0056b3;
+            font-weight: 500;
+        }
+
+        /* --- Course Grid --- */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Min width 300px */
+            gap: 30px; /* Increased gap */
+        }
+
+        /* --- Course Card --- */
+        .course-card {
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; /* For positioning level tag */
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-icon {
+            font-size: 3em; /* Larger icon */
+            color: #007bff; /* Primary icon color */
+            margin-bottom: 20px;
+        }
+
+        .course-card h3 {
+            margin-bottom: 15px;
+            color: #343a40;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .course-card p {
+            color: #6c757d;
+            font-size: 0.95em;
+            flex-grow: 1; /* Pushes button down */
+            margin-bottom: 25px; /* Space before button */
+        }
+
+        .course-level {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+            color: #0056b3; /* Darker blue text */
+            font-size: 0.8em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+
+        /* --- View Course Button --- */
+        .btn-view-course {
+            display: inline-block;
+            background-color: #007bff; /* Primary button color */
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            align-self: center;
+            border: none; /* Ensure it looks like a button */
+            cursor: pointer; /* Cursor change */
+        }
+
+        .btn-view-course:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.03);
+        }
+
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 992px) {
+            .course-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+             header h2 { font-size: 2em; }
+             header p { font-size: 1em; }
+            .courses-container { padding: 30px; }
+             .language-switcher {
+                position: static; /* Stack below header */
+                margin-top: 15px;
+                 margin-bottom: -20px; /* Pull grid closer */
+                justify-content: center;
+            }
+            .course-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 25px;
+            }
+            .course-card { padding: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            .course-grid {
+                grid-template-columns: 1fr; /* Single column */
+            }
+             header h2 { font-size: 1.8em; }
+            .courses-container { padding: 20px; }
+            .btn-view-course { padding: 10px 20px; font-size: 0.95em; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="courses-container">
+        <header>
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <button class="lang-btn" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="mr">मराठी</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+
+            <!-- Section Title and Description -->
+            <h2 data-translate-key="sectionTitle">📚 Digital Learning Courses</h2>
+            <p data-translate-key="sectionDescription">Empower yourself with essential digital knowledge and skills through our structured courses.</p>
+        </header>
+
+        <div class="course-grid">
+
+            <!-- Course Card 1: Digital Literacy -->
+            <div class="course-card">
+                <span class="course-level" data-translate-key="levelBeginner">Beginner</span>
+                <div class="course-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3 data-translate-key="course1Title">Digital Literacy Essentials</h3>
+                <p data-translate-key="course1Desc">Master the basics of computers, internet, mobile phones, and staying safe online.</p>
+               <a href="https://youtube.com/playlist?list=PL3ebrYbEcgTC4vAz8lYr7AGvJ_EfL0Cf0&si=13XMJkgCyngqPxEf",href "https://youtu.be/eFquuymrLDo?si=hrEu0YYNc6xKAls5" class="btn-view-course" data-translate-key="viewCourseButton">View Course</a></a>
+            </div>
+
+
+            <!-- Course Card 3: Financial Literacy -->
+            <div class="course-card">
+                 <span class="course-level" data-translate-key="levelIntermediate">Intermediate</span>
+                <div class="course-icon"><i class="fas fa-piggy-bank"></i></div>
+                <h3 data-translate-key="course3Title">Digital Financial Literacy</h3>
+                <p data-translate-key="course3Desc">Learn about online banking, digital payments, savings, and managing money safely online.</p>
+                <a href="https://youtu.be/igz52RqAvbU?si=BjU-thlUZ0KSwjiz" class="btn-view-course" data-translate-key="viewCourseButton">View Course</a>
+            </div>
+
+            <!-- Course Card 4: Online Safety -->
+            <div class="course-card">
+                 <span class="course-level" data-translate-key="levelBeginner">Beginner</span>
+                <div class="course-icon"><i class="fas fa-user-shield"></i></div>
+                <h3 data-translate-key="course4Title">Online Safety & Security</h3>
+                <p data-translate-key="course4Desc">A focused course on protecting your privacy, identifying risks, and navigating the web securely.</p>
+                <a href="https://youtu.be/rWBVIahoSVA?si=WZ7Zjgtjo11P02Kj" class="btn-view-course" data-translate-key="viewCourseButton">View Course</a>
+            </div>
+
+            <!-- Course Card 5: Communication Skills -->
+            <div class="course-card">
+                 <span class="course-level" data-translate-key="levelBeginner">Beginner</span>
+                <div class="course-icon"><i class="fas fa-comments"></i></div>
+                <h3 data-translate-key="course5Title">Digital Communication</h3>
+                <p data-translate-key="course5Desc">Effectively use email, video calls, and messaging apps for personal and professional communication.</p>
+                <a href="https://www.youtube.com/live/UudSwjqFdNM?si=DrSwxD1QXhWp6ZR1" class="btn-view-course" data-translate-key="viewCourseButton">View Course</a>
+            </div>
+
+             <!-- Course Card 6: Mobile Mastery -->
+            <div class="course-card">
+                 <span class="course-level" data-translate-key="levelBeginner">Beginner</span>
+                <div class="course-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3 data-translate-key="course6Title">Smartphone Skills</h3>
+                <p data-translate-key="course6Desc">Unlock the full potential of your smartphone, from basic settings to useful apps.</p>
+                <a href="https://youtu.be/W4NeW_9FQd0?si=IQt4dV7c8NgoEc0N" class="btn-view-course" data-translate-key="viewCourseButton">View Course</a>
+            </div>
+
+            <!-- Add more course cards as needed -->
+
+        </div> <!-- End .course-grid -->
+    </div> <!-- End .courses-container -->
+
+    <!-- Internal JavaScript -->
+    <script>
+        /**
+         * Digital Learning Courses - Multi-Language Script
+         */
+
+        // --- Translations Object ---
+        const translations = {
+            en: {
+                pageTitle: "Digital Learning Courses - Empowerment Platform",
+                sectionTitle: "📚 Digital Learning Courses",
+                sectionDescription: "Empower yourself with essential digital knowledge and skills through our structured courses.",
+                levelBeginner: "Beginner",
+                levelIntermediate: "Intermediate",
+                viewCourseButton: "View Course",
+                // Course Specific
+                course1Title: "Digital Literacy",
+                course1Desc: "Master the basics of computers, internet, mobile phones, and staying safe online.",
+                
+                course3Title: "Digital Financial Literacy",
+                course3Desc: "Learn about online banking, digital payments, savings, and managing money safely online.",
+                course4Title: "Online Safety & Security",
+                course4Desc: "A focused course on protecting your privacy, identifying risks, and navigating the web securely.",
+                course5Title: "Digital Communication",
+                course5Desc: "Effectively use email, video calls, and messaging apps for personal and professional communication.",
+                course6Title: "Smartphone Skills",
+                course6Desc: "Unlock the full potential of your smartphone, from basic settings to useful apps."
+            },
+            mr: {
+                pageTitle: "डिजिटल शिक्षण अभ्यासक्रम",
+                sectionTitle: "📚 डिजिटल शिक्षण अभ्यासक्रम",
+                sectionDescription: "आमच्या संरचित अभ्यासक्रमांद्वारे आवश्यक डिजिटल ज्ञान आणि कौशल्यांसह स्वतःला सक्षम करा.",
+                levelBeginner: "नवशिक्या",
+                levelIntermediate: "मध्यम",
+                viewCourseButton: "अभ्यासक्रम पहा",
+                 // Course Specific (Marathi)
+                course1Title: "डिजिटल साक्षरता आवश्यक",
+                course1Desc: "संगणक, इंटरनेट, मोबाईल फोन आणि ऑनलाइन सुरक्षित राहण्याच्या मूलभूत गोष्टींवर प्रभुत्व मिळवा.",
+                
+                course3Title: "डिजिटल आर्थिक साक्षरता",
+                course3Desc: "ऑनलाइन बँकिंग, डिजिटल पेमेंट, बचत आणि सुरक्षितपणे पैसे व्यवस्थापित करण्याबद्दल शिका.",
+                course4Title: "ऑनलाइन सुरक्षा आणि सुरक्षितता",
+                course4Desc: "तुमच्या गोपनीयतेचे संरक्षण, धोके ओळखणे आणि वेबवर सुरक्षितपणे नेव्हिगेट करण्यावर केंद्रित अभ्यासक्रम.",
+                course5Title: "डिजिटल कम्युनिकेशन",
+                course5Desc: "वैयक्तिक आणि व्यावसायिक संवादासाठी ईमेल, व्हिडिओ कॉल आणि मेसेजिंग अॅप्स प्रभावीपणे वापरा.",
+                course6Title: "स्मार्टफोन कौशल्ये",
+                course6Desc: "तुमच्या स्मार्टफोनची पूर्ण क्षमता अनलॉक करा, मूलभूत सेटिंग्जपासून उपयुक्त अॅप्सपर्यंत."
+            },
+            hi: {
+                pageTitle: "डिजिटल लर्निंग पाठ्यक्रम",
+                sectionTitle: "📚 डिजिटल लर्निंग पाठ्यक्रम",
+                sectionDescription: "हमारे संरचित पाठ्यक्रमों के माध्यम से आवश्यक डिजिटल ज्ञान और कौशल के साथ खुद को सशक्त बनाएं।",
+                levelBeginner: "शुरुआती",
+                levelIntermediate: "मध्यम",
+                viewCourseButton: "पाठ्यक्रम देखें",
+                 // Course Specific (Hindi)
+                course1Title: "डिजिटल साक्षरता अनिवार्य",
+                course1Desc: "कंप्यूटर, इंटरनेट, मोबाइल फोन की मूल बातें और ऑनलाइन सुरक्षित रहने में महारत हासिल करें।",
+                
+                course3Title: "डिजिटल वित्तीय साक्षरता",
+                course3Desc: "ऑनलाइन बैंकिंग, डिजिटल भुगतान, बचत और सुरक्षित रूप से ऑनलाइन पैसे प्रबंधित करने के बारे में जानें।",
+                course4Title: "ऑनलाइन सुरक्षा और संरक्षा",
+                course4Desc: "आपकी गोपनीयता की रक्षा करने, जोखिमों की पहचान करने और वेब को सुरक्षित रूप से नेविगेट करने पर केंद्रित पाठ्यक्रम।",
+                course5Title: "डिजिटल संचार",
+                course5Desc: "व्यक्तिगत और व्यावसायिक संचार के लिए ईमेल, वीडियो कॉल और मैसेजिंग ऐप का प्रभावी ढंग से उपयोग करें।",
+                course6Title: "स्मार्टफोन कौशल",
+                course6Desc: "बुनियादी सेटिंग्स से लेकर उपयोगी ऐप्स तक, अपने स्मार्टफ़ोन की पूरी क्षमता को अनलॉक करें।"
+            }
+        };
+
+        // --- Global Variables ---
+        let currentLanguage = 'en'; // Default
+
+        // --- DOM Elements (Selected once) ---
+        const languageButtons = document.querySelectorAll('.lang-btn');
+        const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+        // --- LocalStorage Key ---
+        const LS_LANG_KEY = 'preferredLanguage';
+
+        // --- Language Functions ---
+        const changeLanguage = (lang) => {
+            if (!translations[lang]) {
+                console.warn(`Language "${lang}" not found.`);
+                return;
+            }
+            currentLanguage = lang; // Update global state
+
+            // Update translatable elements
+            translatableElements.forEach(element => {
+                const key = element.dataset.translateKey;
+                if (translations[lang][key] !== undefined) {
+                    element.textContent = translations[lang][key];
+                } else if (!element.matches('title')) {
+                    // console.warn(`Translation key "${key}" missing for lang "${lang}".`);
+                }
+            });
+
+             // Update page title
+             const pageTitleKey = 'pageTitle';
+             document.title = translations[lang][pageTitleKey] || translations['en'][pageTitleKey];
+
+            // Update language button active state
+            languageButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+
+            // Save preference
+            try { localStorage.setItem(LS_LANG_KEY, lang); } catch (e) { console.warn("Cannot save lang preference.", e); }
+        };
+
+
+        // --- Event Listeners ---
+        const addEventListeners = () => {
+            // Language Buttons
+            languageButtons.forEach(button => {
+                button.addEventListener('click', () => changeLanguage(button.dataset.lang));
+            });
+
+             // Course buttons (currently just links, add JS if interaction needed later)
+             // Example:
+             // const courseButtons = document.querySelectorAll('.btn-view-course');
+             // courseButtons.forEach(button => {
+             //     button.addEventListener('click', (event) => {
+             //         event.preventDefault(); // Prevent default link behavior if needed
+             //         const courseUrl = button.getAttribute('href');
+             //         console.log(`Navigate to course: ${courseUrl}`);
+             //         // Add logic here to load the course content (e.g., navigate, load dynamically)
+             //     });
+             // });
+        };
+
+
+        // --- Initialisation ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Determine and set initial language
+            let initialLang = 'en';
+            try {
+                const savedLang = localStorage.getItem(LS_LANG_KEY);
+                if (savedLang && translations[savedLang]) {
+                    initialLang = savedLang;
+                }
+            } catch (e) { console.warn("Cannot read lang preference.", e); }
+
+            changeLanguage(initialLang); // Apply initial language
+
+            addEventListeners(); // Add event listeners
+        });
+
+    </script>
+
+</body>
+</html>
