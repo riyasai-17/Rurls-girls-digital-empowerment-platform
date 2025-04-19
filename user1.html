@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>👩‍🎓 Learner Role - Rural Girls</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 30px;
+      position: relative;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background-color: #ef4444;
+      color: white;
+      padding: 10px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .logout-btn:hover {
+      background-color: #b91c1c;
+    }
+
+    .role-container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      padding: 32px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      font-size: 64px;
+      text-align: center;
+    }
+
+    .description {
+      text-align: center;
+      color: #4b5563;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      background-color: #eef2ff;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      color: #225cd9; /* Match button color */
+      font-weight: 500;
+      transition: transform 0.2s ease, box-shadow 0.2s ease; /* Added shadow transition */
+      cursor: pointer; /* Add cursor pointer */
+    }
+
+    .feature:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(34, 92, 217, 0.2); /* Add subtle shadow on hover */
+    }
+
+    /* --- CSS FOR RECTANGULAR BUTTONS --- */
+    .actions {
+      text-align: center; /* Ensure the container centers the buttons */
+    }
+
+    .btn {
+      display: inline-block; /* Standard display for buttons */
+      background-color: #225cd9;
+      color: white;
+      padding: 12px 28px;      /* More horizontal padding for rectangle shape */
+      font-size: 16px;          /* Standard font size */
+      font-weight: 500;         /* Medium font weight */
+      text-align: center;
+      border: none;
+      border-radius: 8px;       /* Slightly less rounded corners */
+      cursor: pointer;
+      margin: 8px;            /* Spacing between buttons */
+      vertical-align: middle;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #1a4ccd; /* Darker shade on hover */
+      transform: scale(1.03);   /* Slightly enlarge on hover */
+    }
+    /* --- END OF RECTANGULAR BUTTON CSS --- */
+
+
+    @media (max-width: 600px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+       .btn { /* Adjust button padding/font on smaller screens */
+           padding: 10px 20px; /* Slightly smaller padding */
+           font-size: 15px;
+           margin: 6px;
+           /* Width/Height are now auto based on content/padding */
+       }
+
+      .logout-btn {
+        right: 20px;
+        top: 20px;
+        padding: 8px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="role-container">
+    <div class="avatar">👩‍🎓</div>
+    <h1>Learner Role - Rural Girl</h1>
+    <p class="description">
+      As a learner, you can explore digital education, build real-world skills, and connect with inspiring mentors to shape your future.
+    </p>
+
+    <div class="features">
+      <div class="feature" onclick="navigateTo('f3.html')">📚 Digital Learning</div>
+      <div class="feature" onclick="navigateTo('module2.html')">💬 Mentorship Chat</div>
+      <div class="feature" onclick="navigateTo('CG.html')">🎯 Career Guidance</div>
+      <!-- Example: Add another feature if needed -->
+      <!-- <div class="feature" onclick="navigateTo('progress.html')">📊 Track Progress</div> -->
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="navigateTo('skillHub.html')">Start Learning</button>
+      <button class="btn" onclick="navigateTo('userrole2.html')">Find a Mentor</button>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+
+    function logout() {
+      // Add Firebase logout logic here if using Firebase Auth
+      // For now, just redirects
+      console.log("Logging out..."); // Optional log
+      window.location.href = 'Login.html'; // Ensure Login.html exists
+    }
+  </script>
+
+</body>
+</html>
