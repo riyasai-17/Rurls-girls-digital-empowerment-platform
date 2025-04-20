@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mentor Session</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 30px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+    .banner {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    h2 {
+      margin-top: 40px;
+      color: #222;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 12px 20px;
+      background: #4facfe;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .card {
+      background: #f9fafc;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 15px;
+      border-left: 4px solid #4facfe;
+    }
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .mentor-showcase-card {
+      border-left: 4px solid #38bdf8;
+      background: #f1f9ff;
+    }
+    .mentor-showcase-card h3 {
+      margin-bottom: 5px;
+    }
+    .mentor-showcase-card button {
+      background-color: #38bdf8;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="banner">
+    <h1>Welcome, Mentees 👩‍🏫</h1>
+    
+  </div>
+
+  <!-- 🌟 Mentor Showcase -->
+  <h2>🌟 Mentor Showcase</h2>
+  <div class="mentor-grid">
+    <div class="card mentor-showcase-card">
+      <h3>Dr. Aarti Mehta</h3>
+      <p><strong>Qualification:</strong> PhD in counseling</p>
+      <p><strong>Experience:</strong> 10+ years in AI & ML</p>
+      <p><strong>Skills:</strong>  Research Mentorship</p>
+      <button onclick="selectMentor('Dr. Aarti Mehta')">Book Appointment</button>
+      <button onclick="chatWithMentor()">Chats</button>
+    </div>
+    <div class="card mentor-showcase-card">
+      <h3>Rahul Verma</h3>
+      <p><strong>Qualification:</strong> MBA in Finance</p>
+      <p><strong>Experience:</strong> 7+ years in Investment Banking</p>
+      <p><strong>Skills:</strong> Financial Literacy, Business Strategy</p>
+      <button onclick="selectMentor('Rahul Verma')">SBook Appointment</button>
+      <button onclick="chatWithMentor()">Chats</button>
+    </div>
+    <div class="card mentor-showcase-card">
+      <h3>Divya Nair</h3>
+      <p><strong>Qualification:</strong> M.Ed in Education</p>
+      <p><strong>Experience:</strong> 8+ years in School Leadership</p>
+      <p><strong>Skills:</strong> Curriculum Design, Teaching Strategies</p>
+      <button onclick="selectMentor('Divya Nair')">Book Appointment</button>
+      <button onclick="chatWithMentor()">Chats</button>
+    </div>
+    <div class="card mentor-showcase-card">
+      <h3>Imran Shaikh</h3>
+      <p><strong>Qualification:</strong> B.Tech in Mechanical Engineering</p>
+      <p><strong>Experience:</strong> 6+ years in Product Development</p>
+      <p><strong>Skills:</strong> CAD, Industrial Design, Prototyping</p>
+      <button onclick="selectMentor('Imran Shaikh')">Book Appointment</button>
+      <button onclick="chatWithMentor()">Chats</button>
+    </div>
+
+    <div class="card mentor-showcase-card">
+      <h3>Ashok Kumar</h3>
+      <p><strong>Qualification:</strong> MA in Rural Development</p>
+      <p><strong>Experience:</strong> 12+ years in NGOs & Field Work</p>
+      <p><strong>Skills:</strong> Community Mobilization, Micro-entrepreneurship</p>
+      <button onclick="selectMentor('Ashok Kumar')">Book Appointment</button>
+      <button onclick="chatWithMentor()">Chats</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const sessionForm = document.getElementById("sessionForm");
+  const sessionList = document.getElementById("sessionList");
+  const bookedSessions = [];
+
+  sessionForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("menteeName").value;
+    const email = document.getElementById("menteeEmail").value;
+    const time = document.getElementById("sessionTime").value;
+    
+
+    bookedSessions.push({ name, email, time, });
+    sessionForm.reset();
+    renderSessions();
+  });
+
+  function renderSessions() {
+    sessionList.innerHTML = "<h3>📅 Upcoming Sessions</h3>";
+    bookedSessions.forEach(s => {
+      sessionList.innerHTML += `
+        <div class="card">
+          <strong>Mentee:</strong> ${s.name}<br>
+          <strong>Email:</strong> ${s.email}<br>
+          <strong>Time:</strong> ${new Date(s.time).toLocaleString()}<br>
+          <strong>Note:</strong> ${s.note}
+        </div>
+      `;
+    });
+  }
+
+  // Opportunity posting (static)
+  const oppForm = document.getElementById("oppForm");
+  const oppList = document.getElementById("oppList");
+
+  oppForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = document.getElementById("oppTitle").value;
+    const desc = document.getElementById("oppDesc").value;
+    oppList.innerHTML += `
+      <div class="card">
+        <h3>${title}</h3>
+        <p>${desc}</p>
+      </div>
+    `;
+    oppForm.reset();
+  });
+
+  // Select Mentor Action
+  function selectMentor(mentorName) {
+    alert(`${mentorName} has been selected!`);
+  }
+
+  // Chats Action - Redirects to `module2.html`
+  function chatWithMentor() {
+    window.location.href = 'module2.html';  // Redirect to module2.html page
+  }
+</script>
+
+</body>
+</html>
