@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skill Building</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1f5f9; /* Light gray background */
+      margin: 0;
+      padding: 20px;
+      color: #1d99ce; /* Darker text color */
+    }
+
+    h1 {
+      text-align: center;
+      color: #421830; /* Dark title */
+      margin-bottom: 30px;
+    }
+
+    .language-selector {
+      text-align: right;
+      margin-bottom: 20px;
+      padding-right: 5%; /* Add some padding */
+    }
+    .language-selector label {
+        margin-right: 5px;
+        color: #4b5563; /* Slightly muted label color */
+        font-size: 0.9em;
+    }
+    .language-selector select {
+        padding: 5px 8px;
+        border-radius: 6px;
+        border: 1px solid #d1d5db; /* Light border */
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+      gap: 25px; /* Slightly more gap */
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Softer shadow */
+      padding: 25px; /* Slightly more padding */
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition */
+      /* Optional: Add a subtle border matching the button color */
+      /* border-left: 4px solid #007bff; */
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12); /* Enhanced shadow on hover */
+    }
+
+    .card h3 {
+      margin: 0 0 12px; /* More space below title */
+      color: #1f2937; /* Dark gray heading */
+      font-size: 1.15em;
+    }
+
+    .card p {
+      color: #4b5563; /* Medium gray text */
+      flex-grow: 1; /* Allows description to push button down */
+      line-height: 1.5;
+      font-size: 0.95em;
+      margin-bottom: 15px; /* Ensure space before button */
+    }
+
+    /* --- Color Change Applied Here --- */
+    .card button {
+      background-color: #225cd9; /* Changed to the requested blue */
+      color: white;
+      border: none;
+      padding: 10px 16px; /* Adjusted padding */
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95em; /* Slightly smaller font */
+      font-weight: 500;
+      margin-top: auto; /* Pushes button to bottom if content varies */
+      transition: background-color 0.2s ease;
+    }
+
+    /* --- Hover Color Change Applied Here --- */
+    .card button:hover {
+      background-color:#225cd9; /* Darker blue for hover */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="language-selector">
+    <label for="language">🌐 Select Language:</label>
+    <select id="language" onchange="setLanguage(this.value)">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="mr">मराठी</option>
+      <!-- Add more language options here if needed -->
+    </select>
+  </div>
+
+  <h1 id="title">Skill Hub: Build Your Future</h1>
+
+  <div class="grid" id="skills-container">
+    <!-- Skill cards will be inserted dynamically by JavaScript -->
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Skill Hub: Build Your Future",
+        skills: [
+          { title: "🧵 Tailoring Basics", desc: "Learn stitching, cutting, and using a sewing machine to start your own business.", link: "https://youtu.be/Jv9hpPmcMMU?si=jx5JlNrv56dynaej", btn: "Start Learning" },
+          { title: "🎨 Creative Crafts", desc: "Explore paper quilling, jewelry making & eco-friendly decor. Turn creativity into income.", link: "https://youtube.com/c/ArtNCraftcreative", btn: "Explore Crafts" },
+          { title: "💼 Digital Marketing", desc: "Learn to use Facebook, WhatsApp & Instagram for small business promotion.", link: "https://youtu.be/kvE8RJu8Vts?si=LSqpDcl4_V4pW0sy", btn: "Start Course" },
+          { title: "🌾 Organic Farming", desc: "Learn composting, vegetable growing & sustainable farming methods.", link: "https://youtu.be/J4y5_x4wJMY?si=T2XclcVL5R3qtN79", btn: "Learn Farming" },
+         
+          { title: "🛍️ Micro-entrepreneurship", desc: "Start & manage your own small business confidently.", link: "https://youtu.be/vDC9wN9q33A?si=xQT3vkKm9HfI-Z7U", btn: "Get Started" }
+        ]
+      },
+      hi: {
+        title: "👩‍💻 स्किल हब: अपना भविष्य बनाएं",
+        skills: [
+          { title: "🧵 सिलाई की मूल बातें", desc: "सिलाई, कटाई और मशीन चलाना सीखें। घर से बिजनेस शुरू करें।", link: "https://youtu.be/KJukeGwDARc?si=G5MZC_KV2UEpe_19", btn: "शुरू करें" },
+          { title: "🎨 रचनात्मक क्राफ्ट्स", desc: "पेपर क्विलिंग, गहने बनाना और सजावट सीखें। कमाई का जरिया बनाएं।", link: "https://youtube.com/c/ArtNCraftcreative", btn: "क्राफ्ट्स देखें" },
+          { title: "💼 डिजिटल मार्केटिंग", desc: "फेसबुक, व्हाट्सएप और इंस्टाग्राम से व्यापार बढ़ाएं।", link: "https://youtu.be/kunkYTKFNtI?si=L9qDhd3wRJrWzxLB", btn: "कोर्स शुरू करें" },
+          { title: "🌾 ऑर्गेनिक खेती", desc: "कंपोस्टिंग और जैविक तरीके से खेती करना सीखें।", link: "https://youtube.com/channel/UCghj_ff9fqRPbBoVBguYGJw", btn: "सीखना शुरू करें" },
+          
+          { title: "🛍️ सूक्ष्म उद्यमिता", desc: "अपना व्यवसाय शुरू करें और सफलतापूर्वक चलाएं।", link: "https://youtu.be/vDC9wN9q33A?si=xQT3vkKm9HfI-Z7U", btn: "शुरू करें" }
+        ]
+      },
+      mr: {
+        title: "👩‍💻 कौशल्य केंद्र: तुमचं भविष्य घडवा",
+        skills: [
+          { title: "🧵 शिवणकला मूलतत्त्वे", desc: "शिवणकाम, कटिंग आणि मशीन वापरायला शिका.", link: "https://youtu.be/KJukeGwDARc?si=G5MZC_KV2UEpe_19", btn: "शिकायला सुरुवात करा" },
+          { title: "🎨 क्रिएटिव क्राफ्ट्स", desc: "कागद कला, दागिन्यांचे काम व इको डेकोर शिका.", link: "https://youtube.com/c/ArtNCraftcreative", btn: "क्राफ्ट्स पाहा" },
+          { title: "💼 डिजिटल मार्केटिंग", desc: "फेसबुक, व्हॉट्सॲप आणि इन्स्टाग्राम वापरून व्यवसाय वाढवा.", link: "https://youtu.be/kunkYTKFNtI?si=L9qDhd3wRJrWzxLB", btn: "कोर्स सुरू करा" },
+          { title: "🌾 सेंद्रिय शेती", desc: "कंपोस्ट, सेंद्रिय भाजीपाला शेती शिका.", link: "https://youtube.com/channel/UCghj_ff9fqRPbBoVBguYGJw", btn: "शेती शिका" },
+          
+          { title: "🛍️ सूक्ष्म उद्यम", desc: "छोटा व्यवसाय सुरू करा आणि कमवा.", link: "https://youtu.be/vDC9wN9q33A?si=xQT3vkKm9HfI-Z7U", btn: "सुरु करा" }
+        ]
+      }
+      // Add more languages here in the same format if needed
+    };
+
+    function setLanguage(lang) {
+      const data = translations[lang];
+
+      // Basic check if language data exists
+      if (!data) {
+          console.error("Translation data not found for language:", lang);
+          // Optionally default back to English or show an error message
+          // setLanguage('en'); // Uncomment to default back to English
+          return; // Stop execution for this language change
+      }
+
+      document.getElementById("title").textContent = data.title;
+
+      const container = document.getElementById("skills-container");
+      // Clear previous cards
+      container.innerHTML = "";
+
+      let cardsHTML = ""; // Build HTML string first for better performance
+      data.skills.forEach(skill => {
+        // Use template literals for easier string construction
+        // Changed onclick to use window.open for new tab
+        cardsHTML += `
+          <div class="card">
+            <h3>${skill.title}</h3>
+            <p>${skill.desc}</p>
+            <button onclick="window.open('${skill.link}', '_blank')">${skill.btn}</button>
+          </div>
+        `;
+      });
+      // Set the container's HTML once
+      container.innerHTML = cardsHTML;
+    }
+
+    // Load English content when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        setLanguage('en');
+    });
+
+  </script>
+</body>
+</html>

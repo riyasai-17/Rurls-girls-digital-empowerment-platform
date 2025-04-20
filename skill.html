@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Skill Assessments</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* --- Header Styles --- */
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .select-skill {
+            margin-bottom: 20px;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box; /* Ensure padding doesn't increase overall width */
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background: #f2f4f8;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background-color: #dce7ff;
+        }
+
+        .option.selected {
+            background-color: #b3d4fc;
+        }
+
+        .result {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 20px;
+            color: #28a745; /* Green for success */
+        }
+
+        #quizSection {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #progress-link {
+            margin-top: 20px;
+        }
+
+        #progress-link a {
+            text-decoration: none;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        #progress-link a:hover {
+            background-color: #1e7e34;
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Skill Assessment Portal</h1>
+    </header>
+
+    <div class="container">
+        <h2>📝 Skill Assessment</h2>
+
+        <div class="select-skill">
+            <label for="skill">Choose Skill Category:</label>
+            <select id="skill">
+                <option value="programming">Programming</option>
+                <option value="communication">Communication</option>
+                <option value="health">Health Science</option>
+                <option value="education">Education</option>
+                <option value="finance">Financial Literacy</option>
+            </select>
+            <button onclick="startAssessment()">Start Quiz</button>
+        </div>
+
+        <div id="quizSection">
+            <div id="questionContainer"></div>
+            <button onclick="nextQuestion()">Next</button>
+            <div id="score" class="result"></div>
+            <div id="progress-link" style="display: none;">
+                <a href="progress.html" id="view-progress-btn">View Progress Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Skill Assessment Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const quizzes = {
+            programming: [
+                { question: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "HyperText Markdown Language"], answer: "HyperText Markup Language" },
+                { question: "Which language runs in the browser?", options: ["Python", "C++", "JavaScript"], answer: "JavaScript" },
+                { question: "Which symbol is used for comments in JavaScript?", options: ["//", "#", ""], answer: "//" },
+                { question: "Which of these is a JavaScript framework?", options: ["Laravel", "Django", "React"], answer: "React" },
+                { question: "What does CSS stand for?", options: ["Cascading Style Sheets", "Computer Styled Section", "Creative Style Syntax"], answer: "Cascading Style Sheets" }
+            ],
+            communication: [
+                { question: "What is active listening?", options: ["Ignoring speaker", "Paying full attention", "Multitasking"], answer: "Paying full attention" },
+                { question: "Which is a barrier to effective communication?", options: ["Clear speech", "Noise", "Listening"], answer: "Noise" },
+                { question: "What does non-verbal communication include?", options: ["Emails", "Body language", "Phone calls"], answer: "Body language" },
+                { question: "Best way to improve communication skills?", options: ["Avoid practice", "Read minds", "Practice and feedback"], answer: "Practice and feedback" },
+                { question: "What is the purpose of feedback in communication?", options: ["Confuse speaker", "Show interest", "Interrupt often"], answer: "Show interest" }
+            ],
+            health: [
+                { question: "Which vitamin is produced when skin is exposed to sunlight?", options: ["Vitamin A", "Vitamin C", "Vitamin D"], answer: "Vitamin D" },
+                { question: "How many hours of sleep is recommended for adults?", options: ["4-5 hours", "6-8 hours", "10-12 hours"], answer: "6-8 hours" },
+                { question: "What is a balanced diet?", options: ["Only carbs", "Only protein", "All essential nutrients"], answer: "All essential nutrients" },
+                { question: "Which is a healthy way to reduce stress?", options: ["Overeating", "Regular exercise", "Avoid sleep"], answer: "Regular exercise" },
+                { question: "How much water should an average adult drink daily?", options: ["2-3 glasses", "8 glasses", "Only when thirsty"], answer: "8 glasses" }
+            ],
+            education: [
+                { question: "What is the foundation of lifelong learning?", options: ["Reading", "Writing", "Curiosity"], answer: "Curiosity" },
+                { question: "Which of these is a method of active learning?", options: ["Lecturing", "Group Discussion", "Silent Reading"], answer: "Group Discussion" },
+                { question: "Which is an example of experiential learning?", options: ["Memorizing", "Hands-on practice", "Copying notes"], answer: "Hands-on practice" },
+                { question: "What helps improve focus in studies?", options: ["Multitasking", "Distractions", "Creating a study plan"], answer: "Creating a study plan" },
+                { question: "What promotes deep understanding?", options: ["Surface learning", "Critical thinking", "Guessing answers"], answer: "Critical thinking" }
+            ],
+            finance: [
+                { question: "What does a budget help you do?", options: ["Spend more", "Avoid planning", "Track income and expenses"], answer: "Track income and expenses" },
+                { question: "What is an example of a long-term financial goal?", options: ["Daily groceries", "Buying a home", "Paying utility bills"], answer: "Buying a home" },
+                { question: "Which of these is considered a good saving habit?", options: ["Spending all income", "Saving regularly", "Avoiding bank accounts"], answer: "Saving regularly" },
+                { question: "What is interest on savings?", options: ["Extra charge", "Extra money earned", "Loss"], answer: "Extra money earned" },
+                { question: "Which is a safe investment option?", options: ["Scams", "Stock market (researched)", "Gambling"], answer: "Stock market (researched)" }
+            ]
+        };
+
+        let currentQuiz = [];
+        let currentSkill = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function startAssessment() {
+            currentSkill = document.getElementById("skill").value;
+            currentQuiz = quizzes[currentSkill];
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById("quizSection").style.display = 'block';
+            document.getElementById("score").innerText = '';
+            document.getElementById("progress-link").style.display = 'none';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const container = document.getElementById("questionContainer");
+            const questionObj = currentQuiz[currentQuestionIndex];
+            container.innerHTML = `
+                <div class="question-block">
+                    <h3>${questionObj.question}</h3>
+                    ${questionObj.options.map(option => `
+                        <div class="option" onclick="selectOption(this)">${option}</div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function selectOption(element) {
+            const options = document.querySelectorAll(".option");
+            options.forEach(opt => opt.classList.remove("selected"));
+            element.classList.add("selected");
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector(".option.selected");
+            if (!selected) return alert("Please select an option.");
+
+            const answer = currentQuiz[currentQuestionIndex].answer;
+            if (selected.innerText === answer) score++;
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuiz.length) {
+                showQuestion();
+            } else {
+                document.getElementById("questionContainer").innerHTML = "";
+                document.getElementById("score").innerText = `✅ You scored ${score} out of ${currentQuiz.length}`;
+                document.getElementById("progress-link").style.display = 'block';
+                // Store the result in local storage
+                localStorage.setItem(`${currentSkill}-score`, JSON.stringify({ score: score, total: currentQuiz.length }));
+            }
+        }
+    </script>
+
+</body>
+</html>

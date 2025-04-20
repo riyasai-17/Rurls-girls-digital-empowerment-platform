@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Progress Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .dashboard-container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .progress-label {
+            flex-grow: 1;
+            font-weight: bold;
+        }
+
+        .progress-circle-container {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .progress-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#007bff 0%, #ddd 0%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .progress-circle::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+        .progress-value {
+            position: relative;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📊 Your Progress Dashboard</h1>
+    </header>
+
+    <div class="dashboard-container">
+        <h2>Assessment Scores</h2>
+        <div id="progress-list">
+            <p class="no-data">No assessment data available yet.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Skill Assessment Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressList = document.getElementById('progress-list');
+            progressList.innerHTML = ''; // Clear the "no data" message
+
+            const skills = ['programming', 'communication', 'health', 'education', 'finance'];
+            let hasData = false;
+
+            skills.forEach(skill => {
+                const result = localStorage.getItem(`${skill}-score`);
+                if (result) {
+                    hasData = true;
+                    const data = JSON.parse(result);
+                    const percentage = (data.score / data.total) * 100;
+
+                    const progressItem = document.createElement('div');
+                    progressItem.classList.add('progress-item');
+                    progressItem.innerHTML = `
+                        <div class="progress-label">${skill.charAt(0).toUpperCase() + skill.slice(1)}</div>
+                        <div class="progress-circle-container">
+                            <div class="progress-circle">
+                                <span class="progress-value">${Math.round(percentage)}%</span>
+                            </div>
+                        </div>`;
+                    progressList.appendChild(progressItem);
+
+                    // Apply the conic-gradient after the element is added to the DOM
+                    const progressCircle = progressItem.querySelector('.progress-circle');
+                    progressCircle.style.background = `conic-gradient(#28a745 ${percentage}%, #ddd ${percentage}%)`;
+                }
+            });
+
+            if (!hasData) {
+                progressList.innerHTML = '<p class="no-data">No assessment data available yet.</p>';
+            }
+        });
+    </script>
+
+</body>
+</html>

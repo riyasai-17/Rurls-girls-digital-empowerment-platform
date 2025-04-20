@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>👩‍🏫 Mentor Role - Empowerment Platform</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      z-index: -1;
+    }
+
+    .logout-btn {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      background-color: #ef4444;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      z-index: 100;
+    }
+
+    .logout-btn:hover {
+      background-color: #dc2626;
+    }
+
+    .role-container {
+      max-width: 850px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+
+    .avatar {
+      font-size: 64px;
+      text-align: center;
+    }
+
+    .description {
+      text-align: center;
+      color: #475569;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .feature-link {
+      text-decoration: none;
+    }
+
+    .feature {
+      background-color: #ecfdf5;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      color: #047857;
+      font-weight: 500;
+      transition: transform 0.2s ease,  0.2s ease;
+    }
+
+    .feature:hover {
+      transform: scale(1.05);
+      background-color: #d1fae5;
+    }
+
+    .actions {
+      text-align: center;
+    }
+
+    .btn {
+      background-color: #10b981;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 8px;
+      transition:  0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #059669;
+    }
+
+    @media (max-width: 600px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .logout-btn {
+        right: 15px;
+        top: 15px;
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay"></div>
+
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="role-container">
+    <div class="avatar">👩‍🏫</div>
+    <h1>Mentor / Trainer Role</h1>
+    <p class="description">
+      As a mentor or trainer, your role is to guide rural learners, offer practical knowledge, and empower them through interactive learning and real-life advice.
+    </p>
+
+    <div class="features">
+      <a class="feature-link" href="skill.html"><div class="feature">📝 Skill Assessments</div></a>
+      <a class="feature-link" href="progress.html"><div class="feature">📈 Monitor Learner Progress</div></a>
+      
+      
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="navigateTo('mentorship.html')">View Mentees</button>
+      <button class="btn" onclick="navigateTo('forum.html')">Lead Discussion</button>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitHSZmMd4k5hdm-JU2CxxPf8NkNc3TFc",
+      authDomain: "dark-quasar-456916-g1.firebaseapp.com",
+      projectId: "dark-quasar-456916-g1",
+      storageBucket: "dark-quasar-456916-g1.appspot.com",
+      messagingSenderId: "773027060771",
+      appId: "1:773027060771:web:711a4bd7de034859e96596",
+      measurementId: "G-Y0W1GPRD5S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    window.logout = function () {
+      signOut(auth).then(() => {
+        window.location.href = "Login.html"; // Redirect to login
+      }).catch((error) => {
+        alert("Error logging out: " + error.message);
+      });
+    };
+  </script>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+
+</body>
+</html>

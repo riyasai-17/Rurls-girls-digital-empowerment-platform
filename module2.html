@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mentorship Chat</title>
+  <style>
+        .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  background-color: #4f46e5;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .top-bar {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .language-selector {
+      font-size: 14px;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      height: 80vh;
+    }
+
+    .chat-header {
+      background-color: #4f46e5;
+      color: white;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background-color: #f9fafb;
+    }
+
+    .message {
+      max-width: 80%;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      line-height: 1.4;
+      clear: both;
+    }
+
+    .sent {
+      background-color: #4f46e5;
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 0;
+    }
+
+    .received {
+      background-color: #e5e7eb;
+      color: #111827;
+      margin-right: auto;
+      border-bottom-left-radius: 0;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .chat-input button {
+      background-color: #16a34a;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .chat-input button:hover {
+      background-color: #15803d;
+    }
+
+    @media (max-width: 600px) {
+      .chat-container {
+        height: 90vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <h2>💬 Mentorship Chat</h2>
+    <div class="language-selector">
+      <label for="lang">🌐</label>
+      <select id="lang" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+        <option value="mr">मराठी</option>
+      
+      </select>
+    </div>
+  </div>
+
+  <div class="chat-container">
+    <a href="userrole1.html" class="back-button">← Back</a>
+    <div class="chat-header" id="chatHeader">
+      💬 Mentorship Chat with Riya (Mentor)
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="message received" id="welcomeMsg">Hi there! I'm Riya, your mentor. How can I help you today?</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="message-input" placeholder="Type your message..." />
+      <button onclick="sendMessage()" id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const messagesContainer = document.getElementById("chat-messages");
+    const input = document.getElementById("message-input");
+
+    const translations = {
+      en: {
+        welcome: "Hi there! I'm Riya, your mentor. How can I help you today?",
+        send: "Send",
+        header: "💬 Mentorship Chat with Riya (Mentor)",
+        replies: {
+          job: "Great! Let's talk about your career interests. Do you have any field in mind?",
+          course: "We have courses on digital literacy, tailoring, and entrepreneurship. Want a link?",
+          greet: "Hello! 😊 I'm here to support you.",
+          default: "That's interesting! Tell me more."
+        }
+      },
+      hi: {
+        welcome: "नमस्ते! मैं रिया हूँ, आपकी मार्गदर्शक। आपकी कैसे मदद कर सकती हूँ?",
+        send: "भेजें",
+        header: "💬 रिया (मार्गदर्शक) के साथ मेंटरशिप चैट",
+        replies: {
+          job: "बहुत अच्छा! क्या आपके मन में कोई करियर फील्ड है?",
+          course: "हमारे पास डिजिटल साक्षरता, सिलाई और उद्यमिता पर पाठ्यक्रम हैं। क्या आप लिंक चाहते हैं?",
+          greet: "नमस्ते! 😊 मैं आपकी मदद के लिए यहाँ हूँ।",
+          default: "दिलचस्प! और बताइए।"
+        }
+      },
+      mr: {
+        welcome: "नमस्कार! मी रिया आहे, तुमची मेंटर. मी कशी मदत करू शकते?",
+        send: "पाठवा",
+        header: "💬 मेंटर रिया सोबत मार्गदर्शन गप्पा",
+        replies: {
+          job: "छान! तुम्हाला कोणत्या क्षेत्रात करिअर करायचं आहे?",
+          course: "आमच्याकडे डिजिटल साक्षरता, शिवणकाम आणि उद्योजकतेचे कोर्सेस आहेत. लिंक पाहिजे का?",
+          greet: "नमस्कार! 😊 मी इथे तुमची मदत करण्यासाठी आहे.",
+          default: "छान! अजून सांगा."
+        }
+      },
+      
+      
+    };
+
+    let currentLang = "en";
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById("chatHeader").textContent = translations[lang].header;
+      document.getElementById("welcomeMsg").textContent = translations[lang].welcome;
+      document.getElementById("sendBtn").textContent = translations[lang].send;
+      input.placeholder = translations[lang].send + " your message...";
+    }
+
+    function sendMessage() {
+      const text = input.value.trim();
+      if (text === "") return;
+
+      const msg = document.createElement("div");
+      msg.className = "message sent";
+      msg.textContent = text;
+      messagesContainer.appendChild(msg);
+      input.value = "";
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      setTimeout(() => {
+        const reply = document.createElement("div");
+        reply.className = "message received";
+        reply.textContent = getMentorReply(text);
+        messagesContainer.appendChild(reply);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }, 1000);
+    }
+
+    function getMentorReply(userMsg) {
+      const msg = userMsg.toLowerCase();
+      const { replies } = translations[currentLang];
+
+      if (msg.includes("job") || msg.includes("career")) {
+        return replies.job;
+      } else if (msg.includes("course")) {
+        return replies.course;
+      } else if (msg.includes("hello") || msg.includes("hi") ) {
+        return replies.greet;
+      } else {
+        return replies.default;
+      }
+    }
+  </script>
+</body>
+</html>
