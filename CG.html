@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Guidance</title>
+  <style>
+    body {
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url('c1.jpg'); /* Replace with your image path */
+  background-size: cover;                 /* Makes the image cover the entire page */
+  background-position: center;            /* Center the image */
+  background-repeat: no-repeat;           /* Prevent image tiling */
+  margin: 0;
+  padding: 30px;
+}
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 20px;
+    }
+
+    .filter {
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: #1f2937;
+    }
+
+    .card p {
+      color: #4b5563;
+      font-size: 15px;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: #e0e7ff;
+      color: #3730a3;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 12px;
+      text-decoration: none;
+      color: white;
+      background-color: #4f46e5;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .card a:hover {
+      background-color: #4338ca;
+    }
+
+    @media (max-width: 600px) {
+      .filter {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="heading">Career Guidance Center</h1>
+
+  <div class="filter">
+    <select id="language-selector" onchange="changeLanguage()">
+      <option value="en">English</option>
+      <option value="mr">मराठी</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+
+    <select id="category-filter" onchange="filterCards()">
+      <option value="all">All Opportunities</option>
+      <option value="scholarship">Scholarships</option>
+      <option value="job">Online Jobs</option>
+      <option value="internship">Internships</option>
+    </select>
+  </div>
+
+  <div class="grid" id="card-container">
+    <!-- Cards will be rendered here -->
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        heading: "Career Guidance Center",
+        filter: {
+          all: "All Opportunities",
+          scholarship: "Scholarships",
+          job: "Online Jobs",
+          internship: "Internships"
+        },
+        items: [
+          {
+            title: "Girls in Tech Scholarship",
+            description: "Get up to ₹30,000 for tech courses and certifications. For girls aged 15-25.",
+            type: "scholarship",
+            link: "https://scholarshiplearn.com"
+          },
+          {
+            title: "Online Data Entry Job",
+            description: "Flexible part-time job doing basic data entry from mobile or PC. No experience needed.",
+            type: "job",
+            link: "https://jobs.best-jobs-online.com/"
+          },
+          
+          {
+            title: "Freelance Translator (Hindi-English)",
+            description: "Translate documents from Hindi to English and earn on project basis.",
+            type: "job",
+            link: "https://www.fiverr.com"
+          },
+          {
+            title: "NGO Admin Internship",
+            description: "Support an NGO’s admin tasks remotely and gain professional experience.",
+            type: "internship",
+            link: "https://jobs.best-jobs-online.com/"
+          }
+        ]
+      },
+      mr: {
+        heading: "करिअर मार्गदर्शन केंद्र",
+        filter: {
+          all: "सर्व संधी",
+          scholarship: "शिष्यवृत्ती",
+          job: "ऑनलाइन नोकऱ्या",
+          internship: "इंटर्नशिप"
+        },
+        items: [
+          { title: "गर्ल्स इन टेक शिष्यवृत्ती", description: "तांत्रिक अभ्यासक्रमांसाठी ₹30,000 पर्यंत. वयोगट 15-25 वर्षे.", type: "scholarship", link: "#" },
+          { title: "ऑनलाइन डेटा एंट्री जॉब", description: "मोबाईल किंवा पीसीवरून डेटा एंट्री. अनुभव आवश्यक नाही.", type: "job", link: "#" },
+        
+          { title: "फ्रीलान्स अनुवादक (हिंदी-इंग्रजी)", description: "हिंदी ते इंग्रजी दस्तऐवजांचे भाषांतर करा आणि कमवा.", type: "job", link: "#" },
+          { title: "NGO अ‍ॅडमिन इंटर्नशिप", description: "NGO साठी ऑनलाइन अ‍ॅडमिन कार्य. अनुभव मिळवा.", type: "internship", link: "#" }
+        ]
+      },
+      hi: {
+        heading: "करियर मार्गदर्शन केंद्र",
+        filter: {
+          all: "सभी अवसर",
+          scholarship: "छात्रवृत्ति",
+          job: "ऑनलाइन नौकरियां",
+          internship: "इंटर्नशिप"
+        },
+        items: [
+          { title: "गर्ल्स इन टेक स्कॉलरशिप", description: "टेक कोर्स के लिए ₹30,000 तक। उम्र 15-25 साल।", type: "scholarship", link: "#" },
+          { title: "ऑनलाइन डेटा एंट्री जॉब", description: "मोबाइल या पीसी से आसान डेटा एंट्री। अनुभव जरूरी नहीं।", type: "job", link: "#" },
+          
+          { title: "फ्रीलांस अनुवादक (हिंदी-इंग्लिश)", description: "हिंदी से इंग्लिश में अनुवाद करके कमाएं।", type: "job", link: "#" },
+          { title: "NGO एडमिन इंटर्नशिप", description: "NGO के प्रशासनिक कार्यों में ऑनलाइन सहायता करें।", type: "internship", link: "#" }
+        ]
+      },
+     
+      
+    };
+
+    let currentLang = "en";
+
+    function renderCards(items) {
+      const container = document.getElementById("card-container");
+      container.innerHTML = "";
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <div class="tag">${capitalize(item.type)}</div><br/>
+          <a href="${item.link}" target="_blank">Learn More</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterCards() {
+      const filter = document.getElementById("category-filter").value;
+      const items = translations[currentLang].items;
+      const filtered = filter === "all" ? items : items.filter(i => i.type === filter);
+      renderCards(filtered);
+    }
+
+    function changeLanguage() {
+      currentLang = document.getElementById("language-selector").value;
+      const t = translations[currentLang];
+      document.getElementById("heading").textContent = t.heading;
+      const filter = document.getElementById("category-filter");
+      filter.options[0].text = t.filter.all;
+      filter.options[1].text = t.filter.scholarship;
+      filter.options[2].text = t.filter.job;
+      filter.options[3].text = t.filter.internship;
+      filterCards();
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // Initial render
+    changeLanguage();
+  </script>
+
+</body>
+</html>
